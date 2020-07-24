@@ -24,7 +24,7 @@ module ActsAsOcenieable
 
     def create_migration_file
       if self.class.orm_has_migration?
-        migration_template "migration.erb", "db/migrate/ocenie_migration.rb", migration_version: migration_version
+        migration_template "migration.erb", "db/migrate/acts_as_ocenieable_migration.rb", migration_version: migration_version
       end
     end
 
