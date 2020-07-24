@@ -1,8 +1,9 @@
 # ActsAsOcenie
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/acts_as_ocenie`. To experiment with that code, run `bin/console` for an interactive prompt.
+Acts as Oceniable is a Ruby Gem written for adding ratings to Rails/Active models.
+Ocenie in Poslish means: rating or review
 
-TODO: Delete this and the text above, and describe your gem
+This gem is based off of acts_as_votable.
 
 ## Installation
 
@@ -20,9 +21,23 @@ Or install it yourself as:
 
     $ gem install acts_as_ocenieable
 
+### Database Migrations
+
+Act As Oceniable uses the ocenies table to store all ratings. Run the following
+commands to generate and run migrations:
+
+    rails generate acts_as_ocenieable:migration
+    rake db:migrate
+
 ## Usage
 
-TODO: Write usage instructions here
+### Ocenie Models
+
+```ruby
+class Movie < ActiveRecord::Base
+  acts_as_ocenieable
+end
+```
 
 ## Development
 
