@@ -1,7 +1,7 @@
 # ActsAsOcenie
 
-Acts as Oceniable is a Ruby Gem written for adding ratings to Rails/Active models.
-Ocenie in Poslish means: rating or review
+Acts as Oceniable is a Ruby Gem written for adding ratings to Rails/Active
+models. Ocenie in Polish means rating or review.
 
 This gem is based off of acts_as_votable.
 
