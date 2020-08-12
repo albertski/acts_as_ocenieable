@@ -8,4 +8,7 @@ module ActsAsOcenieable
 
     ActiveRecord::Base.extend ActsAsOcenieable::Extenders::Ocenieable
   end
+
+  class Engine < ::Rails::Engine
+  end
 end

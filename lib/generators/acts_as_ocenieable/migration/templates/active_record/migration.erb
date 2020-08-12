@@ -3,9 +3,10 @@ class ActsAsOcenieableMigration < ActiveRecord::Migration<%= migration_version %
     create_table :ocenies do |t|
       t.references :rateable, :polymorphic => true
       t.references :rater, :polymorphic => true
-      t.string :name
+      t.string :rating_type_category
       t.string :rating_type
-      t.integer :rating
+      t.decimal :rating, :precision => 5, :scale => 2
+      t.decimal :max_rating, :precision => 5, :scale => 2
       t.integer :weight
       t.timestamps
     end

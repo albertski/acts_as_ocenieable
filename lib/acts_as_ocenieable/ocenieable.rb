@@ -3,60 +3,49 @@ module ActsAsOcenieable
 
     def self.included(base)
       base.class_eval do
-        has_many :ocenies_for, class_name: "ActsAsOcenieable::Ocenie", as: :rateable, dependent: :destroy do
+        has_many :ocenies, class_name: "ActsAsOcenieable::Ocenie", as: :rateable, dependent: :destroy do
           def raters
             includes(:rater).map(&:rater)
           end
         end
+        accepts_nested_attributes_for :ocenies
+
+        before_save :add_default_ocenie_values
       end
     end
 
-    attr_accessor :ocenie_registered
-
-    def ocenie_registered?
-      return self.ocenie_registered
-    end
-
-    def rate_by(args = {})
-      return false if args[:rater].nil?
-
-      options = { rating: 1, type: ""}.merge(args)
-
-      ocenies = find_ocenies_by(options[:rater], options[:type])
-
-      if ocenies.empty?
-        # This rater has never add rating.
-        ocenie = ActsAsOcenieable::Ocenie.new(
-          rateable: self,
-          rater: options[:rater],
-          rating_type: options[:type]
-        )
-      else
-        # This rater is potentially changing their rating.
-        ocenie = ocenies.last
-      end
-
-      last_update = ocenie.updated_at
-
-      ocenie.weight = (options[:weight].to_i if options[:weight].present?) || 1
-
-      ActiveRecord::Base.transaction do
-        self.ocenie_registered = false
-        return false unless ocenie.save
-
-        self.ocenie_registered = true if last_update != ocenie.updated_at
-        return true
+    def add_default_ocenie_values
+      self.ocenies.each do |item|
+        item.rater = self.user
       end
     end
 
-    def find_ocenies_for(extra_conditions = {})
-      ocenies_for.where(extra_conditions)
-    end
+    def build_ocenies
+      self.acts_as_ocenieable_options[:rating_types].each do |rating_type_category, rating_types|
+        rating_types.each do |rating_type|
+          has_rating = false
 
-    def find_ocenies_by(rater, type)
-      find_ocenies_for(rater_id: rater.id,
-                       rating_type: type,
-                       rater_type: rater.class.base_class.name)
+          self.ocenies.each do |ocenie|
+            has_rating = true if ocenie.has_category_and_type?(rating_type_category, rating_type)
+          end
+
+          self.ocenies.build rating_type_category: rating_type_category,
+                                     rating_type: rating_type,
+                                     max_rating: self.acts_as_ocenieable_options[:max_rating] if !has_rating
+        end
+      end
+
+      self.ocenies = self.ocenies.select do |current_ocenie|
+        reject = false
+        self.acts_as_ocenieable_options[:rating_types].each do |rating_type_category, rating_types|
+          rating_types.each do |rating_type|
+            reject = true if current_ocenie.has_category_and_type?(rating_type_category, rating_type)
+          end
+        end
+        reject
+      end
+
+      self.ocenies
     end
   end
 end

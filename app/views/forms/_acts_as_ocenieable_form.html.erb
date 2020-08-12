@@ -1,0 +1,24 @@
+<%= form.fields_for :ocenies do |ocenies_form| %>
+  <%= field_set_tag "#{ocenies_form.object.rating_type_category} - #{ocenies_form.object.rating_type}" do %>
+    <div class="form-group">
+      <%= ocenies_form.label :rating %>
+      <%= ocenies_form.text_field :rating %>
+    </div>
+
+    <div class="form-group">
+      <%= ocenies_form.hidden_field :max_rating %>
+    </div>
+
+    <div class="form-group">
+      <%= ocenies_form.hidden_field :rating_type_category %>
+    </div>
+
+    <div class="form-group">
+      <%= ocenies_form.hidden_field :rating_type %>
+    </div>
+
+    <div class="form-group">
+      <%= ocenies_form.hidden_field :weight, value: ocenies_form.index %>
+    </div>
+  <% end %>
+<% end %>
