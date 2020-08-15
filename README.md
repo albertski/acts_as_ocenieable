@@ -1,7 +1,16 @@
-# Acts as Oceniable
+# Acts as Ocenieable
 
-Acts as Oceniable is a Ruby Gem written for adding ratings to Rails/Active
+Acts as Ocenieable is a Ruby Gem written for adding ratings to Rails/Active
 models. Ocenie in Polish means rating or review.
+
+## Why Ocenieable
+
+Acts as Ocenieable gem provides an easy way to give different ratings based on
+the ActiveRecord Model. For example, your movie reviews may have directing and
+acting review categories, but your app review will not have those.  Also, within
+your ActiveRecord model, you may have different reviews based on a category. For
+example, a science fiction book may have different rating categories vs. a
+non-fiction book.
 
 ## Installation
 
@@ -21,7 +30,7 @@ Or install it yourself as:
 
 ### Database Migrations
 
-Act As Oceniable uses the ocenies table to store all ratings. Run the following
+Act As Ocenieable uses the ocenies table to store all ratings. Run the following
 commands to generate and run migrations:
 
     rails generate acts_as_ocenieable:migration
@@ -62,7 +71,7 @@ end
 
 ### Views
 
-Inside your Active Model's form, render the oceniable form:
+Inside your Active Model's form, render the ocenieable form:
 
 ```ruby
   <%= render "forms/acts_as_ocenieable_form", form: f %>
