@@ -1,0 +1,22 @@
+
+class ActsAsOcenieableMigration < ActiveRecord::Migration[6.0]
+  def self.up
+    create_table :ocenies do |t|
+      t.references :rateable, :polymorphic => true
+      t.references :rater, :polymorphic => true
+      t.string :rating_type_category
+      t.string :rating_type
+      t.decimal :rating, :precision => 5, :scale => 2
+      t.decimal :max_rating, :precision => 5, :scale => 2
+      t.integer :weight
+      t.timestamps
+    end
+
+    add_index :ocenies, [:rateable_id, :rating]
+    add_index :ocenies, [:rater_id, :rating]
+  end
+
+  def self.down
+    drop_table :ocenies
+  end
+end

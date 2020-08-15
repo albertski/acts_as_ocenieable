@@ -8,5 +8,12 @@
 /tmp/
 /vendor
 
-# rspec failure tracking
+# Dummy application.
+/dummy
+
+# Rspec items.
 .rspec_status
+/spec/examples.txt
+
+# Debugging.
+.byebug_history

@@ -1,0 +1,8 @@
+test:
+  adapter: sqlite3
+  database: ":memory:"
+  timeout: 500
+development:
+  adapter: sqlite3
+  database: ":memory:"
+  timeout: 500

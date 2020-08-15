@@ -1,4 +1,4 @@
-require "acts_as_ocenieable/ocenieable"
+#require "acts_as_ocenieable/ocenieable"
 
 RSpec.describe ActsAsOcenieable::Ocenieable do
   it "should not be rateable" do
