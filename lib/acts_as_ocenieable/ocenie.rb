@@ -11,8 +11,16 @@ module ActsAsOcenieable
     scope :for_type, ->(klass) { where(rateable_type: klass.to_s) }
     scope :by_type, ->(klass) { where(rater_type: klass.to_s) }
 
+    before_validation :remove_if_rating_is_blank
+
     def has_category_and_type?(rating_type_category, rating_type)
       self.rating_type.eql? rating_type and self.rating_type_category.to_sym.eql? rating_type_category
+    end
+
+    protected
+
+    def remove_if_rating_is_blank
+      self.mark_for_destruction if self.rating == nil
     end
   end
 end

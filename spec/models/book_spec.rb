@@ -17,4 +17,13 @@ RSpec.describe Book, type: :model do
     expect(ocenie.rating_type).to eq("Writing")
     expect(ocenie.max_rating.to_s).to eq("10.0")
   end
+
+  it "should only save items with ratings" do
+    book = create(:book)
+    book.build_ocenies
+    book.ocenies.first.rating = 2.0
+    book.ocenies.second.rating = 3.0
+    book.save
+    expect(book.ocenies.count).to equal(2)
+  end
 end
